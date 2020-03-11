@@ -1,0 +1,62 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\delai\\OneDrive\\CTI\\AMASP\\AmaspCSharp\\AmaspCSharp\\AmaspCSharp.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\delai\\OneDrive\\CTI\\AMASP\\AmaspCSharp\\AmaspCSharp\\AmaspCSharp.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\delai\\OneDrive\\CTI\\AMASP\\AmaspCSharp\\AmaspCSharp\\AmaspCSharp.csproj",
+        "projectName": "AmaspCSharp",
+        "projectPath": "C:\\Users\\delai\\OneDrive\\CTI\\AMASP\\AmaspCSharp\\AmaspCSharp\\AmaspCSharp.csproj",
+        "packagesPath": "C:\\Users\\delai\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\delai\\OneDrive\\CTI\\AMASP\\AmaspCSharp\\AmaspCSharp\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\delai\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "dependencies": {
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            },
+            "System.IO.Ports": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}

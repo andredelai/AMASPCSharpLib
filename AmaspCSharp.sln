@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmaspCSharp", "AmaspCSharp\AmaspCSharp.csproj", "{804D6AC4-068C-49F1-93F3-E5B6A727BE89}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{804D6AC4-068C-49F1-93F3-E5B6A727BE89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{804D6AC4-068C-49F1-93F3-E5B6A727BE89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{804D6AC4-068C-49F1-93F3-E5B6A727BE89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{804D6AC4-068C-49F1-93F3-E5B6A727BE89}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FB3454D3-14C7-4A89-B57D-0B8499629559}
+	EndGlobalSection
+EndGlobal
