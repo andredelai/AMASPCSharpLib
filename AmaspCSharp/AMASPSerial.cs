@@ -1,4 +1,22 @@
-﻿using System;
+﻿/*    
+  Created by Andre L. Delai.
+
+  This is a free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 2.1 of the License, or (at your option) any later version.
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+
+using System;
 using System.IO.Ports;
 using System.Text;
 
@@ -15,6 +33,7 @@ namespace AmaspCSharp
         SerialPort serialCom;
 
         public ErrorCheckTypes ErrorCheckType { get => errorCheckType; set => errorCheckType = value; }
+        public SerialPort SerialCom { get => serialCom; set => serialCom = value; }
 
         public enum PacketTypes
         {
@@ -54,7 +73,7 @@ namespace AmaspCSharp
 
         public bool Begin(SerialPort serialCom)
         {
-            this.serialCom = serialCom;
+            this.SerialCom = serialCom;
             if (serialCom != null)
             {
                 try
@@ -75,9 +94,9 @@ namespace AmaspCSharp
 
         public void end()
         {
-            if (serialCom != null)
+            if (SerialCom != null)
             {
-                serialCom.Close();
+                SerialCom.Close();
             }
         }
 
@@ -90,19 +109,19 @@ namespace AmaspCSharp
             pkt[0] = (byte)'!';
             pkt[1] = (byte)'~';
             //ECA
-            hex = Encoding.ASCII.GetBytes(String.Format("{0:X1}", errorCheckType));
+            hex = Encoding.Default.GetBytes(String.Format("{0:X1}", errorCheckType));
             pkt[2] = hex[0];
             //Devide ID
-            hex = Encoding.ASCII.GetBytes(String.Format("{0:X3}", deviceId));
+            hex = Encoding.Default.GetBytes(String.Format("{0:X3}", deviceId));
             pkt[3] = hex[0];
             pkt[4] = hex[1];
             pkt[5] = hex[2];
             //Error Code
-            hex = Encoding.ASCII.GetBytes(String.Format("{0:X2}", errorCode));
+            hex = Encoding.Default.GetBytes(String.Format("{0:X2}", errorCode));
             pkt[6] = hex[0];
             pkt[7] = hex[1];
             //Error Checking data
-            hex = Encoding.ASCII.GetBytes(String.Format("{0:X4}", errorCode));
+            hex = Encoding.Default.GetBytes(String.Format("{0:X4}", errorCode));
             pkt[8] = hex[0];
             pkt[9] = hex[1];
             pkt[10] = hex[2];
@@ -111,7 +130,7 @@ namespace AmaspCSharp
             pkt[12] = (byte)'\r';
             pkt[13] = (byte)'\n';
 
-            serialCom.Write(pkt, 0, 14);
+            SerialCom.Write(pkt, 0, 14);
         }
 
         public PacketData readPacket()
@@ -121,7 +140,7 @@ namespace AmaspCSharp
             byte[] auxBuf = new byte[PKTMAXSIZE - 9];
             int aux;
             ErrorCheckTypes eCheck;
-            double milisecPerByte = 1 / ((double)serialCom.BaudRate / 8000);
+            double milisecPerByte = 1 / ((double)SerialCom.BaudRate / 8000);
 
             pktData.Type = PacketTypes.Timeout;
             pktData.DeviceId = 0x000;
@@ -130,18 +149,18 @@ namespace AmaspCSharp
 
             try
             {
-                while (serialCom.Read(buffer, 0, 1) > 0)
+                while (SerialCom.Read(buffer, 0, 1) > 0)
                 {
                     if (buffer[0] == '!')
                     {
                         //Reading packet type, error check type and device ID bytes
                         aux = 0;
-                        while (serialCom.BytesToRead < 5 && aux <= serialCom.ReadTimeout)
+                        while (SerialCom.BytesToRead < 5 && aux <= SerialCom.ReadTimeout)
                         {
                             aux++;
                             System.Threading.Thread.Sleep(1);
                         }
-                        if (serialCom.Read(auxBuf, 0, 5) == 5)
+                        if (SerialCom.Read(auxBuf, 0, 5) == 5)
                         {
                             buffer[1] = auxBuf[0];//pkt type byte
                             buffer[2] = auxBuf[1];//error check type byte
@@ -164,7 +183,7 @@ namespace AmaspCSharp
                         //Extracting device ID
                         try
                         {
-                            pktData.DeviceId = int.Parse(Encoding.UTF8.GetString(buffer, 3, 6), System.Globalization.NumberStyles.HexNumber);
+                            pktData.DeviceId = int.Parse(Encoding.Default.GetString(buffer, 3, 6), System.Globalization.NumberStyles.HexNumber);
                         }
                         catch
                         {
@@ -177,29 +196,29 @@ namespace AmaspCSharp
                             case (byte)'?':
                                 //Reading error check type, device ID and msg length
                                 aux = 0;
-                                while (serialCom.BytesToRead < 3 && aux <= serialCom.ReadTimeout)
+                                while (SerialCom.BytesToRead < 3 && aux <= SerialCom.ReadTimeout)
                                 {
                                     aux++;
                                     System.Threading.Thread.Sleep(1);
                                 }
-                                if (serialCom.Read(auxBuf, 0, 3) == 3)
+                                if (SerialCom.Read(auxBuf, 0, 3) == 3)
                                 {
                                     Array.Copy(auxBuf, 0, buffer, 6, 3);
 
                                     //Extracting message length
-                                    pktData.CodeLength = int.Parse(Encoding.UTF8.GetString(buffer, 6, 9), System.Globalization.NumberStyles.HexNumber);
+                                    pktData.CodeLength = int.Parse(Encoding.Default.GetString(buffer, 6, 9), System.Globalization.NumberStyles.HexNumber);
 
                                     //Reading message, error check data and end packet chars
                                     aux = 0;
-                                    while (serialCom.BytesToRead <= (pktData.CodeLength + 6) && aux <= serialCom.ReadTimeout)
+                                    while (SerialCom.BytesToRead <= (pktData.CodeLength + 6) && aux <= SerialCom.ReadTimeout)
                                     {
                                         aux++;
                                         System.Threading.Thread.Sleep(1);
                                     }
-                                    if (serialCom.Read(auxBuf, 0, pktData.CodeLength + 6) == pktData.CodeLength + 6)
+                                    if (SerialCom.Read(auxBuf, 0, pktData.CodeLength + 6) == pktData.CodeLength + 6)
                                     {
                                         Array.Copy(auxBuf, 0, buffer, 9, pktData.CodeLength + 6);
-                                        aux = int.Parse(Encoding.UTF8.GetString(buffer, pktData.CodeLength + 9, pktData.CodeLength + 13), System.Globalization.NumberStyles.HexNumber);
+                                        aux = int.Parse(Encoding.Default.GetString(buffer, pktData.CodeLength + 9, pktData.CodeLength + 13), System.Globalization.NumberStyles.HexNumber);
                                         //checking for errors
                                         if (aux == errorCheck(buffer, pktData.CodeLength + 9, eCheck))
                                         {
@@ -221,29 +240,29 @@ namespace AmaspCSharp
                             case (byte)'#':
                                 //Reading error check type, device ID and msg length
                                 aux = 0;
-                                while (serialCom.BytesToRead < 3 && aux <= serialCom.ReadTimeout)
+                                while (SerialCom.BytesToRead < 3 && aux <= SerialCom.ReadTimeout)
                                 {
                                     aux++;
                                     System.Threading.Thread.Sleep(1);
                                 }
-                                if (serialCom.Read(auxBuf, 0, 3) == 3)
+                                if (SerialCom.Read(auxBuf, 0, 3) == 3)
                                 {
                                     Array.Copy(auxBuf, 0, buffer, 6, 3);
 
                                     //Extracting message length
-                                    pktData.CodeLength = int.Parse(Encoding.UTF8.GetString(buffer, 6, 9), System.Globalization.NumberStyles.HexNumber);
+                                    pktData.CodeLength = int.Parse(Encoding.Default.GetString(buffer, 6, 9), System.Globalization.NumberStyles.HexNumber);
 
                                     //Reading message, error check data and end packet chars
                                     aux = 0;
-                                    while (serialCom.BytesToRead <= (pktData.CodeLength + 6) && aux <= serialCom.ReadTimeout)
+                                    while (SerialCom.BytesToRead <= (pktData.CodeLength + 6) && aux <= SerialCom.ReadTimeout)
                                     {
                                         aux++;
                                         System.Threading.Thread.Sleep(1);
                                     }
-                                    if (serialCom.Read(auxBuf, 0, pktData.CodeLength + 6) == pktData.CodeLength + 6)
+                                    if (SerialCom.Read(auxBuf, 0, pktData.CodeLength + 6) == pktData.CodeLength + 6)
                                     {
                                         Array.Copy(auxBuf, 0, buffer, 9, pktData.CodeLength + 6);
-                                        aux = int.Parse(Encoding.UTF8.GetString(buffer, pktData.CodeLength + 9, pktData.CodeLength + 13), System.Globalization.NumberStyles.HexNumber);
+                                        aux = int.Parse(Encoding.Default.GetString(buffer, pktData.CodeLength + 9, pktData.CodeLength + 13), System.Globalization.NumberStyles.HexNumber);
                                         //checking for errors
                                         if (aux == errorCheck(buffer, pktData.CodeLength + 9, eCheck))
                                         {
@@ -265,15 +284,15 @@ namespace AmaspCSharp
                             case (byte)'~':
                                 //Reading error code
                                 aux = 0;
-                                while (serialCom.BytesToRead < 8 && aux <= serialCom.ReadTimeout)
+                                while (SerialCom.BytesToRead < 8 && aux <= SerialCom.ReadTimeout)
                                 {
                                     aux++;
                                     System.Threading.Thread.Sleep(1);
                                 }
-                                if (serialCom.Read(auxBuf, 0, 8) == 8)
+                                if (SerialCom.Read(auxBuf, 0, 8) == 8)
                                 {
                                     Array.Copy(auxBuf, 0, buffer, 6, 8);
-                                    aux = int.Parse(Encoding.UTF8.GetString(buffer, 8, 12), System.Globalization.NumberStyles.HexNumber);
+                                    aux = int.Parse(Encoding.Default.GetString(buffer, 8, 12), System.Globalization.NumberStyles.HexNumber);
                                     if (aux == errorCheck(buffer, 8, eCheck))
                                     {
                                         // ErrorCode extraction
@@ -289,19 +308,19 @@ namespace AmaspCSharp
                             case (byte)'!':
                                 //Reading error code
                                 aux = 0;
-                                while (serialCom.BytesToRead < 8 && aux <= serialCom.ReadTimeout)
+                                while (SerialCom.BytesToRead < 8 && aux <= SerialCom.ReadTimeout)
                                 {
                                     aux++;
                                     System.Threading.Thread.Sleep(1);
                                 }
-                                if (serialCom.Read(auxBuf, 0, 8) == 8)
+                                if (SerialCom.Read(auxBuf, 0, 8) == 8)
                                 {
                                     Array.Copy(auxBuf, 0, buffer, 6, 8);
-                                    aux = int.Parse(Encoding.UTF8.GetString(buffer, 8, 12), System.Globalization.NumberStyles.HexNumber);
+                                    aux = int.Parse(Encoding.Default.GetString(buffer, 8, 12), System.Globalization.NumberStyles.HexNumber);
                                     if (aux == errorCheck(buffer, 8, eCheck))
                                     {
                                         // ErrorCode extraction
-                                        pktData.CodeLength = int.Parse(Encoding.UTF8.GetString(buffer, 6, 8), System.Globalization.NumberStyles.HexNumber);
+                                        pktData.CodeLength = int.Parse(Encoding.Default.GetString(buffer, 6, 8), System.Globalization.NumberStyles.HexNumber);
                                         pktData.ErrorCheckType = eCheck;
                                         pktData.Type = PacketTypes.SIP; //CEP recognized
                                         return pktData;

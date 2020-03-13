@@ -736,11 +736,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\delai\\OneDrive\\CTI\\AMASP\\AmaspCSharp\\AmaspCSharp\\AmaspCSharp.csproj",
+      "projectUniqueName": "C:\\Users\\delai\\Documents\\Repositorio\\amaspcsharplib\\AmaspCSharp\\AmaspCSharp.csproj",
       "projectName": "AmaspCSharp",
-      "projectPath": "C:\\Users\\delai\\OneDrive\\CTI\\AMASP\\AmaspCSharp\\AmaspCSharp\\AmaspCSharp.csproj",
+      "projectPath": "C:\\Users\\delai\\Documents\\Repositorio\\amaspcsharplib\\AmaspCSharp\\AmaspCSharp.csproj",
       "packagesPath": "C:\\Users\\delai\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\delai\\OneDrive\\CTI\\AMASP\\AmaspCSharp\\AmaspCSharp\\obj\\",
+      "outputPath": "C:\\Users\\delai\\Documents\\Repositorio\\amaspcsharplib\\AmaspCSharp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
