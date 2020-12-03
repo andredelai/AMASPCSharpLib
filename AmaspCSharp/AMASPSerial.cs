@@ -401,27 +401,17 @@ namespace AmaspCSharp
         }
 
 
-        protected ushort Fletcher16Check(byte[] data, int len)
+        protected ushort Fletcher16Check(byte[] data, int dataLength)
         {
-            uint c0, c1, idx = 0;
-            for (c0 = c1 = 0; len > 0;)
+            uint sum1 = 0, sum2 = 0, index;
+
+            for (index = 0; index < dataLength; ++index)
             {
-                uint blocklen = (uint)len;
-                if (blocklen > 0x138A)
-                {
-                    blocklen = 0x138A;
-                }
-                len -= (int)blocklen;
-                do
-                {
-                    c0 += data[idx];
-                    c1 += c0;
-                    idx++;
-                } while ((--blocklen) != 0);
-                c0 %= 0xFF;
-                c1 %= 0xFF;
+                sum1 = (sum1 + data[index]) % 255;
+                sum2 = (sum2 + sum1) % 255;
             }
-            return (ushort)(c1 << 8 | c0);
+
+            return (ushort)((sum2 << 8) | sum1);
         }
 
         protected int errorCheck(byte[] data, int dataLength, ErrorCheckTypes eCheckType)
