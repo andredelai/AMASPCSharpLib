@@ -322,7 +322,7 @@ namespace AmaspCSharp
                                         // ErrorCode extraction
                                         pktData.CodeLength = int.Parse(Encoding.Default.GetString(buffer, 6, 8), System.Globalization.NumberStyles.HexNumber);
                                         pktData.ErrorCheckType = eCheck;
-                                        pktData.Type = PacketTypes.SIP; //CEP recognized
+                                        pktData.Type = PacketTypes.SIP; //SIP recognized
                                         return pktData;
                                     }
                                 }
@@ -344,78 +344,84 @@ namespace AmaspCSharp
 
         }
 
-        protected ushort CRC16Check(byte[] data, int dataLenght)
+        protected ushort CRC16Modbus(byte[] data, int dataLength)
         {
             ushort crc = 0xFFFF;
-            for (int pos = 0; pos < dataLenght; pos++)
+            for (int pos = 0; pos < dataLength; pos++)
             {
-                crc ^= (ushort)data[pos];
+                crc ^= data[pos];
+
                 for (int i = 8; i != 0; i--)
                 {
                     if ((crc & 0x0001) != 0)
                     {
                         crc >>= 1;
-                        crc &= 0x7FFF;
-                        crc ^= 0xA001;
+                        crc ^= 0xA001; // Polynomial Modbus
                     }
                     else
                     {
                         crc >>= 1;
-                        crc &= 0x7FFF;
                     }
                 }
             }
-
-            // Note, this number has low and high bytes swapped, so use it accordingly (or swap bytes)
             return crc;
         }
 
-        protected int LRC16Check(byte[] data, int dataLength)
+
+        protected ushort LRC16Check(byte[] data, int dataLength)
         {
-            int lrc = 0;
+            ushort lrc = 0;
             for (int i = 0; i < dataLength; i++)
             {
-                lrc = (lrc + data[i]) & 0xFFFF;
+                lrc = (ushort)((lrc + data[i]) & 0xFFFF);
             }
-            lrc = (((lrc ^ 0xFFFF) + 1) & 0xFFFF);
+            lrc = (ushort)(((lrc ^ 0xFFFF) + 1) & 0xFFFF);
             return lrc;
         }
 
-        protected int XORCheck(byte[] data, int dataLength)
+        protected ushort XORCheck(byte[] data, int dataLength)
         {
             byte xorCheck = 0;
             for (int i = 0; i < dataLength; i++)
             {
                 xorCheck ^= data[i];
             }
-            return (int)xorCheck;
+            return xorCheck;
         }
 
         //Classical checksum
-        protected int checksum16Check(byte[] message, int dataLength)
+        protected ushort checksum16Check(byte[] data, int dataLength)
         {
-            int sum = 0;
+            ushort sum = 0;
             for (int i = 0; i < dataLength; i++)
             {
-                sum += message[i];
+                sum += data[i];
             }
-            return sum;
+            return (sum);
         }
 
 
-        protected int fletcher16Checksum(byte[] data, int dataLength)
+        protected ushort Fletcher16Check(byte[] data, int len)
         {
-
-            int sum1 = 0, sum2 = 0, index;
-
-            for (index = 0; index < dataLength; ++index)
+            uint c0, c1, idx = 0;
+            for (c0 = c1 = 0; len > 0;)
             {
-                sum1 = (sum1 + data[index]) % 255;
-                sum2 = (sum2 + sum1) % 255;
+                uint blocklen = (uint)len;
+                if (blocklen > 0x138A)
+                {
+                    blocklen = 0x138A;
+                }
+                len -= (int)blocklen;
+                do
+                {
+                    c0 += data[idx];
+                    c1 += c0;
+                    idx++;
+                } while ((--blocklen) != 0);
+                c0 %= 0xFF;
+                c1 %= 0xFF;
             }
-
-            return (sum2 << 8) | sum1;
-
+            return (ushort)(c1 << 8 | c0);
         }
 
         protected int errorCheck(byte[] data, int dataLength, ErrorCheckTypes eCheckType)
@@ -436,11 +442,11 @@ namespace AmaspCSharp
                     break;
 
                 case ErrorCheckTypes.fletcher16:
-                    ret = fletcher16Checksum(data, dataLength);
+                    ret = Fletcher16Check(data, dataLength);
                     break;
 
                 case ErrorCheckTypes.CRC16:
-                    ret = CRC16Check(data, dataLength);
+                    ret = CRC16Modbus(data, dataLength);
                     break;
 
                 default:
