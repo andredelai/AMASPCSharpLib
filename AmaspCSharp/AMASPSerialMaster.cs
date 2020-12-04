@@ -22,8 +22,18 @@ using System.Text;
 
 namespace AmaspCSharp
 {
+    /// <summary>
+    /// AMASP Master class
+    /// </summary>
     class AMASPSerialMaster : AMASPSerial
     {
+
+        /// <summary>
+        /// Send a MRP packet to a slave computer.
+        /// </summary>
+        /// <param name="deviceId">Id of the requested device in slave.</param>
+        /// <param name="message">The message in bytes to be send.</param>
+        /// <param name="msgLength">The message length.</param>
         public void sendRequest (int deviceId, byte[] message, int msgLength)
         {
             byte[] hex;
@@ -70,6 +80,12 @@ namespace AmaspCSharp
             SerialCom.Write(pkt, 0, 15 + msgLength);
         }
 
+        /// <summary>
+        /// Send a MRP packet to a slave computer.
+        /// </summary>
+        /// <param name="deviceID">Id of the requested device in slave.</param>
+        /// <param name="message">The string message to be send.</param>
+        /// <param name="msgLength">The message length.</param>
         public void sendRequest(int deviceID, String message, int msgLength)
         {
             sendRequest(deviceID, Encoding.Default.GetBytes(message), msgLength);

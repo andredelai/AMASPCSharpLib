@@ -22,6 +22,9 @@ using System.Text;
 
 namespace AmaspCSharp
 {
+    /// <summary>
+    /// AMASP Abstract class
+    /// </summary>
     public abstract class AMASPSerial
     {
 
@@ -31,10 +34,14 @@ namespace AmaspCSharp
         private ErrorCheckTypes errorCheckType = ErrorCheckTypes.None;
 
         SerialPort serialCom;
-
+                
         public ErrorCheckTypes ErrorCheckType { get => errorCheckType; set => errorCheckType = value; }
         public SerialPort SerialCom { get => serialCom; set => serialCom = value; }
 
+        /// <summary>
+        /// Enumeration to the packet types available in AMASP and the Timeout.
+        /// MRP(0), SRP(1), SIP(2), CEP(3), Timeout(4).
+        /// </summary>
         public enum PacketTypes
         {
             MRP = 0,
@@ -44,6 +51,10 @@ namespace AmaspCSharp
             Timeout = 4
         }
 
+        /// <summary>
+        /// Enumeration to the error checking algorithms available in AMASP.
+        /// None(0), XOR8(1), checksum16(2), LRC16(3), fletcher16(4), CRC16(5).
+        /// </summary>
         public enum ErrorCheckTypes
         {
             None = 0,
@@ -54,6 +65,9 @@ namespace AmaspCSharp
             CRC16 = 5
         }
 
+        /// <summary>
+        /// Represents the data packet, containing the packet type, device ID, Message, code length and erro check type.
+        /// </summary>
         public class PacketData
         {
             private PacketTypes type;
@@ -70,7 +84,11 @@ namespace AmaspCSharp
         }
 
 
-
+        /// <summary>
+        /// Establishes a serial connection.
+        /// </summary>
+        /// <param name="serialCom">The serial communication object.</param>
+        /// <returns>True if the serial connection was stablished or false if not.</returns>
         public bool Begin(SerialPort serialCom)
         {
             this.SerialCom = serialCom;
@@ -92,6 +110,9 @@ namespace AmaspCSharp
             }
         }
 
+        /// <summary>
+        /// Closes the serial connection.
+        /// </summary>
         public void end()
         {
             if (SerialCom != null)
@@ -100,6 +121,11 @@ namespace AmaspCSharp
             }
         }
 
+        /// <summary>
+        /// Send a CEP packet (Communication Error Packet).
+        /// </summary>
+        /// <param name="deviceId">Id of the target device in communication.</param>
+        /// <param name="errorCode">The communication error code (0 to 255).</param>
         public void SendError(int deviceId, int errorCode)
         {
             byte[] hex;
@@ -133,6 +159,10 @@ namespace AmaspCSharp
             SerialCom.Write(pkt, 0, 14);
         }
 
+        /// <summary>
+        /// Check if a valid packet is available and read it.
+        /// </summary>
+        /// <returns>A PacketData Object which contains the information and data from a packet.</returns>
         public PacketData readPacket()
         {
             PacketData pktData = new PacketData();

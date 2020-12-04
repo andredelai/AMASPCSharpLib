@@ -22,8 +22,18 @@ using System.Text;
 
 namespace AmaspCSharp
 {
+
+    /// <summary>
+    /// AMASP Slave class
+    /// </summary>
     class AMASPSerialSlave : AMASPSerial
     {
+        /// <summary>
+        /// Send a SRP (Slave Response Packet) to a master computer.
+        /// </summary>
+        /// <param name="deviceId">Id of the slave device who answered.</param>
+        /// <param name="message">The response message (in bytes) to be send.</param>
+        /// <param name="msgLength">The message length.</param>
         public void sendResponse(int deviceId, byte[] message, int msgLength)
         {
             byte[] hex;
