@@ -7,12 +7,3 @@ C:\Users\delai\Documents\Repositorio\AmaspCSharp\AmaspCSharp\obj\Debug\netstanda
 C:\Users\delai\Documents\Repositorio\AmaspCSharp\AmaspCSharp\bin\Debug\netstandard2.0\AmaspCSharp.pdb
 C:\Users\delai\Documents\Repositorio\AmaspCSharp\AmaspCSharp\obj\Debug\netstandard2.0\AmaspCSharp.dll
 C:\Users\delai\Documents\Repositorio\AmaspCSharp\AmaspCSharp\obj\Debug\netstandard2.0\AmaspCSharp.pdb
-C:\Users\delai\Documents\Repositorio\amaspcsharplib\AmaspCSharp\bin\Debug\netstandard2.0\AmaspCSharp.deps.json
-C:\Users\delai\Documents\Repositorio\amaspcsharplib\AmaspCSharp\bin\Debug\netstandard2.0\AmaspCSharp.dll
-C:\Users\delai\Documents\Repositorio\amaspcsharplib\AmaspCSharp\bin\Debug\netstandard2.0\AmaspCSharp.pdb
-C:\Users\delai\Documents\Repositorio\amaspcsharplib\AmaspCSharp\obj\Debug\netstandard2.0\AmaspCSharp.csprojAssemblyReference.cache
-C:\Users\delai\Documents\Repositorio\amaspcsharplib\AmaspCSharp\obj\Debug\netstandard2.0\AmaspCSharp.csproj.CoreCompileInputs.cache
-C:\Users\delai\Documents\Repositorio\amaspcsharplib\AmaspCSharp\obj\Debug\netstandard2.0\AmaspCSharp.AssemblyInfoInputs.cache
-C:\Users\delai\Documents\Repositorio\amaspcsharplib\AmaspCSharp\obj\Debug\netstandard2.0\AmaspCSharp.AssemblyInfo.cs
-C:\Users\delai\Documents\Repositorio\amaspcsharplib\AmaspCSharp\obj\Debug\netstandard2.0\AmaspCSharp.dll
-C:\Users\delai\Documents\Repositorio\amaspcsharplib\AmaspCSharp\obj\Debug\netstandard2.0\AmaspCSharp.pdb

@@ -1,0 +1,181 @@
+\hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial}{}\doxysection{Amasp\+C\+Sharp.\+A\+M\+A\+S\+P\+Serial Class Reference}
+\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial}\index{AmaspCSharp.AMASPSerial@{AmaspCSharp.AMASPSerial}}
+
+
+A\+M\+A\+SP Abstract class  
+
+
+Inheritance diagram for Amasp\+C\+Sharp.\+A\+M\+A\+S\+P\+Serial\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_amasp_c_sharp_1_1_a_m_a_s_p_serial}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_1_1_packet_data}{Packet\+Data}}
+\begin{DoxyCompactList}\small\item\em Represents the data packet, containing the packet type, device ID, Message, code length and erro check type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a2f17d5153c1922c37d854997fc586820}{Packet\+Types}} \{ \newline
+{\bfseries M\+RP} = 0, 
+{\bfseries S\+RP} = 1, 
+{\bfseries S\+IP} = 2, 
+{\bfseries C\+EP} = 3, 
+\newline
+{\bfseries Timeout} = 4
+ \}
+\begin{DoxyCompactList}\small\item\em Enumeration to the packet types available in A\+M\+A\+SP and the Timeout. M\+R\+P(0), S\+R\+P(1), S\+I\+P(2), C\+E\+P(3), Timeout(4). \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a56bab350540dbd2fc5c83def75f919f0}{Error\+Check\+Types}} \{ \newline
+{\bfseries None} = 0, 
+{\bfseries X\+O\+R8} = 1, 
+{\bfseries checksum16} = 2, 
+{\bfseries L\+R\+C16} = 3, 
+\newline
+{\bfseries fletcher16} = 4, 
+{\bfseries C\+R\+C16} = 5
+ \}
+\begin{DoxyCompactList}\small\item\em Enumeration to the error checking algorithms available in A\+M\+A\+SP. None(0), X\+O\+R8(1), checksum16(2), L\+R\+C16(3), fletcher16(4), C\+R\+C16(5). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_ad09934c3a64b41d3eb08dae8932ef247}{Begin}} (Serial\+Port serial\+Com)
+\begin{DoxyCompactList}\small\item\em Establishes a serial connection. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a05b6a919a6f60debcc38da6734e6cf26}{end}} ()
+\begin{DoxyCompactList}\small\item\em Closes the serial connection. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_ae6e9c3db30615d8773369eacfbbf44a6}{Send\+Error}} (int device\+Id, int error\+Code)
+\begin{DoxyCompactList}\small\item\em Send a C\+EP packet (Communication Error Packet). \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_1_1_packet_data}{Packet\+Data}} \mbox{\hyperlink{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a8eb57f6066e61b5d87a89a3f07ca80ac}{read\+Packet}} ()
+\begin{DoxyCompactList}\small\item\em Check if a valid packet is available and read it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_ac6d8802f8c67de3751b90ba0c1fef4c8}\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_ac6d8802f8c67de3751b90ba0c1fef4c8}} 
+const int {\bfseries M\+S\+G\+M\+A\+X\+S\+I\+ZE} = 4096
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a516342b69eaa8fe98e5a13086a19bcc2}\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a516342b69eaa8fe98e5a13086a19bcc2}} 
+ushort {\bfseries C\+R\+C16\+Modbus} (byte\mbox{[}$\,$\mbox{]} data, int data\+Length)
+\item 
+\mbox{\Hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a98cdde238880c53c6e6be1d1f81def4c}\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a98cdde238880c53c6e6be1d1f81def4c}} 
+ushort {\bfseries L\+R\+C16\+Check} (byte\mbox{[}$\,$\mbox{]} data, int data\+Length)
+\item 
+\mbox{\Hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_abf0a25f4c4e1adced2370c469ac616a2}\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_abf0a25f4c4e1adced2370c469ac616a2}} 
+ushort {\bfseries X\+O\+R\+Check} (byte\mbox{[}$\,$\mbox{]} data, int data\+Length)
+\item 
+\mbox{\Hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a1469f678f43521eff955a09d6234ef75}\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a1469f678f43521eff955a09d6234ef75}} 
+ushort {\bfseries checksum16\+Check} (byte\mbox{[}$\,$\mbox{]} data, int data\+Length)
+\item 
+\mbox{\Hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a01a6b34206bb816a552da15652985f16}\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a01a6b34206bb816a552da15652985f16}} 
+ushort {\bfseries Fletcher16\+Check} (byte\mbox{[}$\,$\mbox{]} data, int data\+Length)
+\item 
+\mbox{\Hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a42ef30661e35978723612ded200e29f2}\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a42ef30661e35978723612ded200e29f2}} 
+int {\bfseries error\+Check} (byte\mbox{[}$\,$\mbox{]} data, int data\+Length, \mbox{\hyperlink{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a56bab350540dbd2fc5c83def75f919f0}{Error\+Check\+Types}} e\+Check\+Type)
+\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a3685e4724c491fa94c43bc64db8d9c20}\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a3685e4724c491fa94c43bc64db8d9c20}} 
+\mbox{\hyperlink{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a56bab350540dbd2fc5c83def75f919f0}{Error\+Check\+Types}} {\bfseries Error\+Check\+Type}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+\mbox{\Hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_afe513770ac3b2a9f29e203cdba03ff19}\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_afe513770ac3b2a9f29e203cdba03ff19}} 
+Serial\+Port {\bfseries Serial\+Com}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A\+M\+A\+SP Abstract class 
+
+
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a56bab350540dbd2fc5c83def75f919f0}\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a56bab350540dbd2fc5c83def75f919f0}} 
+\index{AmaspCSharp.AMASPSerial@{AmaspCSharp.AMASPSerial}!ErrorCheckTypes@{ErrorCheckTypes}}
+\index{ErrorCheckTypes@{ErrorCheckTypes}!AmaspCSharp.AMASPSerial@{AmaspCSharp.AMASPSerial}}
+\doxysubsubsection{\texorpdfstring{ErrorCheckTypes}{ErrorCheckTypes}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a56bab350540dbd2fc5c83def75f919f0}{Amasp\+C\+Sharp.\+A\+M\+A\+S\+P\+Serial.\+Error\+Check\+Types}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Enumeration to the error checking algorithms available in A\+M\+A\+SP. None(0), X\+O\+R8(1), checksum16(2), L\+R\+C16(3), fletcher16(4), C\+R\+C16(5). 
+
+\mbox{\Hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a2f17d5153c1922c37d854997fc586820}\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a2f17d5153c1922c37d854997fc586820}} 
+\index{AmaspCSharp.AMASPSerial@{AmaspCSharp.AMASPSerial}!PacketTypes@{PacketTypes}}
+\index{PacketTypes@{PacketTypes}!AmaspCSharp.AMASPSerial@{AmaspCSharp.AMASPSerial}}
+\doxysubsubsection{\texorpdfstring{PacketTypes}{PacketTypes}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a2f17d5153c1922c37d854997fc586820}{Amasp\+C\+Sharp.\+A\+M\+A\+S\+P\+Serial.\+Packet\+Types}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Enumeration to the packet types available in A\+M\+A\+SP and the Timeout. M\+R\+P(0), S\+R\+P(1), S\+I\+P(2), C\+E\+P(3), Timeout(4). 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_ad09934c3a64b41d3eb08dae8932ef247}\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_ad09934c3a64b41d3eb08dae8932ef247}} 
+\index{AmaspCSharp.AMASPSerial@{AmaspCSharp.AMASPSerial}!Begin@{Begin}}
+\index{Begin@{Begin}!AmaspCSharp.AMASPSerial@{AmaspCSharp.AMASPSerial}}
+\doxysubsubsection{\texorpdfstring{Begin()}{Begin()}}
+{\footnotesize\ttfamily bool Amasp\+C\+Sharp.\+A\+M\+A\+S\+P\+Serial.\+Begin (\begin{DoxyParamCaption}\item[{Serial\+Port}]{serial\+Com }\end{DoxyParamCaption})}
+
+
+
+Establishes a serial connection. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em serial\+Com} & The serial communication object.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the serial connection was stablished or false if not.
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a05b6a919a6f60debcc38da6734e6cf26}\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a05b6a919a6f60debcc38da6734e6cf26}} 
+\index{AmaspCSharp.AMASPSerial@{AmaspCSharp.AMASPSerial}!end@{end}}
+\index{end@{end}!AmaspCSharp.AMASPSerial@{AmaspCSharp.AMASPSerial}}
+\doxysubsubsection{\texorpdfstring{end()}{end()}}
+{\footnotesize\ttfamily void Amasp\+C\+Sharp.\+A\+M\+A\+S\+P\+Serial.\+end (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Closes the serial connection. 
+
+\mbox{\Hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a8eb57f6066e61b5d87a89a3f07ca80ac}\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_a8eb57f6066e61b5d87a89a3f07ca80ac}} 
+\index{AmaspCSharp.AMASPSerial@{AmaspCSharp.AMASPSerial}!readPacket@{readPacket}}
+\index{readPacket@{readPacket}!AmaspCSharp.AMASPSerial@{AmaspCSharp.AMASPSerial}}
+\doxysubsubsection{\texorpdfstring{readPacket()}{readPacket()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_1_1_packet_data}{Packet\+Data}} Amasp\+C\+Sharp.\+A\+M\+A\+S\+P\+Serial.\+read\+Packet (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Check if a valid packet is available and read it. 
+
+\begin{DoxyReturn}{Returns}
+A \mbox{\hyperlink{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_1_1_packet_data}{Packet\+Data}} Object which contains the information and data from a packet.
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_ae6e9c3db30615d8773369eacfbbf44a6}\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_ae6e9c3db30615d8773369eacfbbf44a6}} 
+\index{AmaspCSharp.AMASPSerial@{AmaspCSharp.AMASPSerial}!SendError@{SendError}}
+\index{SendError@{SendError}!AmaspCSharp.AMASPSerial@{AmaspCSharp.AMASPSerial}}
+\doxysubsubsection{\texorpdfstring{SendError()}{SendError()}}
+{\footnotesize\ttfamily void Amasp\+C\+Sharp.\+A\+M\+A\+S\+P\+Serial.\+Send\+Error (\begin{DoxyParamCaption}\item[{int}]{device\+Id,  }\item[{int}]{error\+Code }\end{DoxyParamCaption})}
+
+
+
+Send a C\+EP packet (Communication Error Packet). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em device\+Id} & Id of the target device in communication.\\
+\hline
+{\em error\+Code} & The communication error code (0 to 255).\\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/delai/\+Documents/\+Repositorio/amaspcsharplib/\+Amasp\+C\+Sharp/A\+M\+A\+S\+P\+Serial.\+cs\end{DoxyCompactItemize}
