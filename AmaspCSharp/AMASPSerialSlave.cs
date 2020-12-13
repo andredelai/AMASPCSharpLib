@@ -34,9 +34,11 @@ namespace AmaspCSharp
         /// <param name="deviceId">Id of the slave device who answered.</param>
         /// <param name="message">The response message (in bytes) to be send.</param>
         /// <param name="msgLength">The message length.</param>
-        public void sendResponse(int deviceId, byte[] message, int msgLength)
+        /// <returns>The error check data.</returns>
+        public int SendResponse(int deviceId, byte[] message, int msgLength)
         {
             byte[] hex;
+            int ecd;
 
             if (message.Length < msgLength)
             {
@@ -67,8 +69,9 @@ namespace AmaspCSharp
             {
                 pkt[9 + i] = message[i];
             }
-            //CRC       
-            hex = Encoding.Default.GetBytes(String.Format("{0:X4}", errorCheck(pkt, msgLength + 9, ErrorCheckType)));
+            //Error checking 
+            ecd = ErrorCheck(pkt, msgLength + 9, ErrorCheckType);
+            hex = Encoding.Default.GetBytes(String.Format("{0:X4}", ecd));
             pkt[9 + msgLength] = (byte)hex[0];
             pkt[9 + msgLength + 1] = (byte)hex[1];
             pkt[9 + msgLength + 2] = (byte)hex[2];
@@ -79,6 +82,49 @@ namespace AmaspCSharp
 
             //Sending request
             SerialCom.Write(pkt, 0, 15 + msgLength);
+            return ecd;
+        }
+
+        /// <summary>
+        /// Send a SIP (Slave Interrupt Packet) to a master computer.
+        /// </summary>
+        /// <param name="deviceId">Id of the slave device who answered.</param>
+        /// <param name="InterrupCode">The code of the interruption (0 to 255).</param>
+        /// <returns>The error check data.</returns>
+        public int SendInterruption(int deviceId, int InterrupCode)
+        {
+            byte[] hex;
+            byte[] pkt = new byte[14];
+            int ecd;
+
+            //Packet Type
+            pkt[0] = (byte)'!';
+            pkt[1] = (byte)'!';
+            //ECA
+            hex = Encoding.Default.GetBytes(String.Format("{0:X1}", ErrorCheckType));
+            pkt[2] = (byte)hex[0];
+            //Device ID
+            hex = Encoding.Default.GetBytes(String.Format("{0:X3}", deviceId));
+            pkt[3] = (byte)hex[0];
+            pkt[4] = (byte)hex[1];
+            pkt[5] = (byte)hex[2];
+            //Error Code       
+            hex = Encoding.Default.GetBytes(String.Format("{0:X2}", InterrupCode));
+            pkt[6] = (byte)hex[0];
+            pkt[7] = (byte)hex[1];
+            //CRC
+            ecd = ErrorCheck(pkt, 8, ErrorCheckType);
+            hex = Encoding.Default.GetBytes(String.Format("{0:X4}", ecd));
+            pkt[8] = (byte)hex[0];
+            pkt[9] = (byte)hex[1];
+            pkt[10] = (byte)hex[2];
+            pkt[11] = (byte)hex[3];
+            //Packet End
+            pkt[12] = (byte)'\r';
+            pkt[13] = (byte)'\n';
+
+            SerialCom.Write(pkt, 0, 14);
+            return ecd;
         }
     }
 }

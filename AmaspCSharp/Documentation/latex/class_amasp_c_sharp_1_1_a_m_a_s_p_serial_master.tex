@@ -14,9 +14,9 @@ Inheritance diagram for Amasp\+C\+Sharp.\+A\+M\+A\+S\+P\+Serial\+Master\+:\begin
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \mbox{\hyperlink{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_master_aced1accbb5398567a7dc00bc3feb2be7}{send\+Request}} (int device\+Id, byte\mbox{[}$\,$\mbox{]} message, int msg\+Length)
+int \mbox{\hyperlink{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_master_a3aee488e381208428e6cd023b71ff2cd}{Send\+Request}} (int device\+Id, byte\mbox{[}$\,$\mbox{]} message, int msg\+Length)
 \begin{DoxyCompactList}\small\item\em Send a M\+RP packet to a slave computer. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_master_aa9050d635025cae1bd2271bf103a1f9d}{send\+Request}} (int device\+ID, String message, int msg\+Length)
+int \mbox{\hyperlink{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_master_ad83cc290341e3dff2e81f9d4a7fd1ab1}{Send\+Request}} (int device\+ID, String message, int msg\+Length)
 \begin{DoxyCompactList}\small\item\em Send a M\+RP packet to a slave computer. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Additional Inherited Members}
 
@@ -27,11 +27,11 @@ A\+M\+A\+SP Master class
 
 
 \doxysubsection{Member Function Documentation}
-\mbox{\Hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_master_aced1accbb5398567a7dc00bc3feb2be7}\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_master_aced1accbb5398567a7dc00bc3feb2be7}} 
-\index{AmaspCSharp.AMASPSerialMaster@{AmaspCSharp.AMASPSerialMaster}!sendRequest@{sendRequest}}
-\index{sendRequest@{sendRequest}!AmaspCSharp.AMASPSerialMaster@{AmaspCSharp.AMASPSerialMaster}}
-\doxysubsubsection{\texorpdfstring{sendRequest()}{sendRequest()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily void Amasp\+C\+Sharp.\+A\+M\+A\+S\+P\+Serial\+Master.\+send\+Request (\begin{DoxyParamCaption}\item[{int}]{device\+Id,  }\item[{byte\mbox{[}$\,$\mbox{]}}]{message,  }\item[{int}]{msg\+Length }\end{DoxyParamCaption})}
+\mbox{\Hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_master_a3aee488e381208428e6cd023b71ff2cd}\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_master_a3aee488e381208428e6cd023b71ff2cd}} 
+\index{AmaspCSharp.AMASPSerialMaster@{AmaspCSharp.AMASPSerialMaster}!SendRequest@{SendRequest}}
+\index{SendRequest@{SendRequest}!AmaspCSharp.AMASPSerialMaster@{AmaspCSharp.AMASPSerialMaster}}
+\doxysubsubsection{\texorpdfstring{SendRequest()}{SendRequest()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily int Amasp\+C\+Sharp.\+A\+M\+A\+S\+P\+Serial\+Master.\+Send\+Request (\begin{DoxyParamCaption}\item[{int}]{device\+Id,  }\item[{byte\mbox{[}$\,$\mbox{]}}]{message,  }\item[{int}]{msg\+Length }\end{DoxyParamCaption})}
 
 
 
@@ -46,11 +46,14 @@ Send a M\+RP packet to a slave computer.
 {\em msg\+Length} & The message length.\\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_master_aa9050d635025cae1bd2271bf103a1f9d}\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_master_aa9050d635025cae1bd2271bf103a1f9d}} 
-\index{AmaspCSharp.AMASPSerialMaster@{AmaspCSharp.AMASPSerialMaster}!sendRequest@{sendRequest}}
-\index{sendRequest@{sendRequest}!AmaspCSharp.AMASPSerialMaster@{AmaspCSharp.AMASPSerialMaster}}
-\doxysubsubsection{\texorpdfstring{sendRequest()}{sendRequest()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily void Amasp\+C\+Sharp.\+A\+M\+A\+S\+P\+Serial\+Master.\+send\+Request (\begin{DoxyParamCaption}\item[{int}]{device\+ID,  }\item[{String}]{message,  }\item[{int}]{msg\+Length }\end{DoxyParamCaption})}
+\begin{DoxyReturn}{Returns}
+The error check data.
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_master_ad83cc290341e3dff2e81f9d4a7fd1ab1}\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_master_ad83cc290341e3dff2e81f9d4a7fd1ab1}} 
+\index{AmaspCSharp.AMASPSerialMaster@{AmaspCSharp.AMASPSerialMaster}!SendRequest@{SendRequest}}
+\index{SendRequest@{SendRequest}!AmaspCSharp.AMASPSerialMaster@{AmaspCSharp.AMASPSerialMaster}}
+\doxysubsubsection{\texorpdfstring{SendRequest()}{SendRequest()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily int Amasp\+C\+Sharp.\+A\+M\+A\+S\+P\+Serial\+Master.\+Send\+Request (\begin{DoxyParamCaption}\item[{int}]{device\+ID,  }\item[{String}]{message,  }\item[{int}]{msg\+Length }\end{DoxyParamCaption})}
 
 
 
@@ -65,6 +68,9 @@ Send a M\+RP packet to a slave computer.
 {\em msg\+Length} & The message length.\\
 \hline
 \end{DoxyParams}
+/// \begin{DoxyReturn}{Returns}
+The error check data.
+\end{DoxyReturn}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Description>The AMASP C# library to serial connections.</Description>
+    <Authors>Andre Luiz Delai</Authors>
+    <Company>Centro de Tecnologia da Informação Renato Archer (CTI)</Company>
   </PropertyGroup>
 
   <ItemGroup>

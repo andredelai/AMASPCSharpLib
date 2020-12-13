@@ -34,9 +34,11 @@ namespace AmaspCSharp
         /// <param name="deviceId">Id of the requested device in slave.</param>
         /// <param name="message">The message in bytes to be send.</param>
         /// <param name="msgLength">The message length.</param>
-        public void sendRequest (int deviceId, byte[] message, int msgLength)
+        /// <returns>The error check data.</returns>
+        public int SendRequest (int deviceId, byte[] message, int msgLength)
         {
             byte[] hex;
+            int ecd;
 
             if (message.Length < msgLength)
             {
@@ -67,7 +69,8 @@ namespace AmaspCSharp
                 pkt[9 + i] = message[i];
             }
             //Error checking
-            hex = Encoding.Default.GetBytes(String.Format("{0:X4}", errorCheck(pkt, msgLength + 9, ErrorCheckType)));
+            ecd = ErrorCheck(pkt, msgLength + 9, ErrorCheckType);
+            hex = Encoding.Default.GetBytes(String.Format("{0:X4}", ecd));
             pkt[9 + msgLength] = hex[0];
             pkt[9 + msgLength + 1] = hex[1];
             pkt[9 + msgLength + 2] = hex[2];
@@ -78,6 +81,7 @@ namespace AmaspCSharp
 
             //Sending request
             SerialCom.Write(pkt, 0, 15 + msgLength);
+            return ecd;
         }
 
         /// <summary>
@@ -86,9 +90,10 @@ namespace AmaspCSharp
         /// <param name="deviceID">Id of the requested device in slave.</param>
         /// <param name="message">The string message to be send.</param>
         /// <param name="msgLength">The message length.</param>
-        public void sendRequest(int deviceID, String message, int msgLength)
+        /// /// <returns>The error check data.</returns>
+        public int SendRequest(int deviceID, String message, int msgLength)
         {
-            sendRequest(deviceID, Encoding.Default.GetBytes(message), msgLength);
+            return SendRequest(deviceID, Encoding.Default.GetBytes(message), msgLength);
         }
     }
 }

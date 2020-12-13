@@ -14,8 +14,10 @@ Inheritance diagram for Amasp\+C\+Sharp.\+A\+M\+A\+S\+P\+Serial\+Slave\+:\begin{
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \mbox{\hyperlink{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_slave_aef6ac5ed290114a035318d7c40528588}{send\+Response}} (int device\+Id, byte\mbox{[}$\,$\mbox{]} message, int msg\+Length)
-\begin{DoxyCompactList}\small\item\em Send a S\+RP (Slave Response Packet) to a master computer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+int \mbox{\hyperlink{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_slave_a5a418eeadab10abdd14e60727fa6de56}{Send\+Response}} (int device\+Id, byte\mbox{[}$\,$\mbox{]} message, int msg\+Length)
+\begin{DoxyCompactList}\small\item\em Send a S\+RP (Slave Response Packet) to a master computer. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_slave_a4755ff7cc844af6d3ee40826710369a3}{Send\+Interruption}} (int device\+Id, int Interrup\+Code)
+\begin{DoxyCompactList}\small\item\em Send a S\+IP (Slave Interrupt Packet) to a master computer. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Additional Inherited Members}
 
 
@@ -25,11 +27,31 @@ A\+M\+A\+SP Slave class
 
 
 \doxysubsection{Member Function Documentation}
-\mbox{\Hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_slave_aef6ac5ed290114a035318d7c40528588}\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_slave_aef6ac5ed290114a035318d7c40528588}} 
-\index{AmaspCSharp.AMASPSerialSlave@{AmaspCSharp.AMASPSerialSlave}!sendResponse@{sendResponse}}
-\index{sendResponse@{sendResponse}!AmaspCSharp.AMASPSerialSlave@{AmaspCSharp.AMASPSerialSlave}}
-\doxysubsubsection{\texorpdfstring{sendResponse()}{sendResponse()}}
-{\footnotesize\ttfamily void Amasp\+C\+Sharp.\+A\+M\+A\+S\+P\+Serial\+Slave.\+send\+Response (\begin{DoxyParamCaption}\item[{int}]{device\+Id,  }\item[{byte\mbox{[}$\,$\mbox{]}}]{message,  }\item[{int}]{msg\+Length }\end{DoxyParamCaption})}
+\mbox{\Hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_slave_a4755ff7cc844af6d3ee40826710369a3}\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_slave_a4755ff7cc844af6d3ee40826710369a3}} 
+\index{AmaspCSharp.AMASPSerialSlave@{AmaspCSharp.AMASPSerialSlave}!SendInterruption@{SendInterruption}}
+\index{SendInterruption@{SendInterruption}!AmaspCSharp.AMASPSerialSlave@{AmaspCSharp.AMASPSerialSlave}}
+\doxysubsubsection{\texorpdfstring{SendInterruption()}{SendInterruption()}}
+{\footnotesize\ttfamily int Amasp\+C\+Sharp.\+A\+M\+A\+S\+P\+Serial\+Slave.\+Send\+Interruption (\begin{DoxyParamCaption}\item[{int}]{device\+Id,  }\item[{int}]{Interrup\+Code }\end{DoxyParamCaption})}
+
+
+
+Send a S\+IP (Slave Interrupt Packet) to a master computer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em device\+Id} & Id of the slave device who answered.\\
+\hline
+{\em Interrup\+Code} & The code of the interruption (0 to 255).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The error check data.
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_slave_a5a418eeadab10abdd14e60727fa6de56}\label{class_amasp_c_sharp_1_1_a_m_a_s_p_serial_slave_a5a418eeadab10abdd14e60727fa6de56}} 
+\index{AmaspCSharp.AMASPSerialSlave@{AmaspCSharp.AMASPSerialSlave}!SendResponse@{SendResponse}}
+\index{SendResponse@{SendResponse}!AmaspCSharp.AMASPSerialSlave@{AmaspCSharp.AMASPSerialSlave}}
+\doxysubsubsection{\texorpdfstring{SendResponse()}{SendResponse()}}
+{\footnotesize\ttfamily int Amasp\+C\+Sharp.\+A\+M\+A\+S\+P\+Serial\+Slave.\+Send\+Response (\begin{DoxyParamCaption}\item[{int}]{device\+Id,  }\item[{byte\mbox{[}$\,$\mbox{]}}]{message,  }\item[{int}]{msg\+Length }\end{DoxyParamCaption})}
 
 
 
@@ -44,6 +66,9 @@ Send a S\+RP (Slave Response Packet) to a master computer.
 {\em msg\+Length} & The message length.\\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The error check data.
+\end{DoxyReturn}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

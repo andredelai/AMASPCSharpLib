@@ -34,7 +34,7 @@ namespace AmaspCSharp
         private ErrorCheckTypes errorCheckType = ErrorCheckTypes.None;
 
         SerialPort serialCom;
-                
+
         public ErrorCheckTypes ErrorCheckType { get => errorCheckType; set => errorCheckType = value; }
         public SerialPort SerialCom { get => serialCom; set => serialCom = value; }
 
@@ -75,12 +75,14 @@ namespace AmaspCSharp
             private byte[] message;
             private int codeLength;
             private ErrorCheckTypes errorCheckType;
+            private int errorCheckData;
 
             public PacketTypes Type { get => type; set => type = value; }
             public int DeviceId { get => deviceId; set => deviceId = value; }
             public byte[] Message { get => message; set => message = value; }
             public int CodeLength { get => codeLength; set => codeLength = value; }
             public ErrorCheckTypes ErrorCheckType { get => errorCheckType; set => errorCheckType = value; }
+            public int ErrorCheckData { get => errorCheckData; set => errorCheckData = value; }
         }
 
 
@@ -113,7 +115,7 @@ namespace AmaspCSharp
         /// <summary>
         /// Closes the serial connection.
         /// </summary>
-        public void end()
+        public void End()
         {
             if (SerialCom != null)
             {
@@ -126,10 +128,12 @@ namespace AmaspCSharp
         /// </summary>
         /// <param name="deviceId">Id of the target device in communication.</param>
         /// <param name="errorCode">The communication error code (0 to 255).</param>
-        public void SendError(int deviceId, int errorCode)
+        /// <returns>The error check data.</returns>
+        public int SendError(int deviceId, int errorCode)
         {
             byte[] hex;
             byte[] pkt = new byte[14];
+            int ecd;
 
             //Packet Type
             pkt[0] = (byte)'!';
@@ -147,7 +151,8 @@ namespace AmaspCSharp
             pkt[6] = hex[0];
             pkt[7] = hex[1];
             //Error Checking data
-            hex = Encoding.Default.GetBytes(String.Format("{0:X4}", errorCode));
+            ecd = ErrorCheck(pkt, 8, ErrorCheckType);
+            hex = Encoding.Default.GetBytes(String.Format("{0:X4}", ecd));
             pkt[8] = hex[0];
             pkt[9] = hex[1];
             pkt[10] = hex[2];
@@ -157,20 +162,20 @@ namespace AmaspCSharp
             pkt[13] = (byte)'\n';
 
             SerialCom.Write(pkt, 0, 14);
+            return ecd;
         }
 
         /// <summary>
         /// Check if a valid packet is available and read it.
         /// </summary>
         /// <returns>A PacketData Object which contains the information and data from a packet.</returns>
-        public PacketData readPacket()
+        public PacketData ReadPacket()
         {
             PacketData pktData = new PacketData();
             byte[] buffer = new byte[PKTMAXSIZE];
             byte[] auxBuf = new byte[PKTMAXSIZE - 9];
             int aux;
             ErrorCheckTypes eCheck;
-            double milisecPerByte = 1 / ((double)SerialCom.BaudRate / 8000);
 
             pktData.Type = PacketTypes.Timeout;
             pktData.DeviceId = 0x000;
@@ -250,7 +255,7 @@ namespace AmaspCSharp
                                         Array.Copy(auxBuf, 0, buffer, 9, pktData.CodeLength + 6);
                                         aux = int.Parse(Encoding.Default.GetString(buffer, pktData.CodeLength + 9, pktData.CodeLength + 13), System.Globalization.NumberStyles.HexNumber);
                                         //checking for errors
-                                        if (aux == errorCheck(buffer, pktData.CodeLength + 9, eCheck))
+                                        if (aux == ErrorCheck(buffer, pktData.CodeLength + 9, eCheck))
                                         {
                                             //End chars checking
                                             if (buffer[pktData.CodeLength + 13] == '\r' || buffer[pktData.CodeLength + 14] == '\n')
@@ -259,6 +264,7 @@ namespace AmaspCSharp
                                                 Array.Copy(buffer, 9, pktData.Message, 0, pktData.CodeLength);
                                                 pktData.Type = (PacketTypes.MRP); //MRP recognized
                                                 pktData.ErrorCheckType = eCheck;
+                                                pktData.ErrorCheckData = aux;
                                                 return pktData;
                                             }
                                         }
@@ -294,7 +300,7 @@ namespace AmaspCSharp
                                         Array.Copy(auxBuf, 0, buffer, 9, pktData.CodeLength + 6);
                                         aux = int.Parse(Encoding.Default.GetString(buffer, pktData.CodeLength + 9, pktData.CodeLength + 13), System.Globalization.NumberStyles.HexNumber);
                                         //checking for errors
-                                        if (aux == errorCheck(buffer, pktData.CodeLength + 9, eCheck))
+                                        if (aux == ErrorCheck(buffer, pktData.CodeLength + 9, eCheck))
                                         {
                                             //End chars checking
                                             if (buffer[pktData.CodeLength + 13] == '\r' || buffer[pktData.CodeLength + 14] == '\n')
@@ -303,6 +309,7 @@ namespace AmaspCSharp
                                                 Array.Copy(buffer, 9, pktData.Message, 0, pktData.CodeLength);
                                                 pktData.Type = (PacketTypes.SRP); //SRP recognized
                                                 pktData.ErrorCheckType = eCheck;
+                                                pktData.ErrorCheckData = aux;
                                                 return pktData;
                                             }
                                         }
@@ -323,12 +330,13 @@ namespace AmaspCSharp
                                 {
                                     Array.Copy(auxBuf, 0, buffer, 6, 8);
                                     aux = int.Parse(Encoding.Default.GetString(buffer, 8, 12), System.Globalization.NumberStyles.HexNumber);
-                                    if (aux == errorCheck(buffer, 8, eCheck))
+                                    if (aux == ErrorCheck(buffer, 8, eCheck))
                                     {
                                         // ErrorCode extraction
                                         pktData.CodeLength = int.Parse(Encoding.UTF8.GetString(buffer, 6, 8), System.Globalization.NumberStyles.HexNumber);
                                         pktData.ErrorCheckType = eCheck;
                                         pktData.Type = PacketTypes.CEP; //CEP recognized
+                                        pktData.ErrorCheckData = aux;
                                         return pktData;
                                     }
                                 }
@@ -347,12 +355,13 @@ namespace AmaspCSharp
                                 {
                                     Array.Copy(auxBuf, 0, buffer, 6, 8);
                                     aux = int.Parse(Encoding.Default.GetString(buffer, 8, 12), System.Globalization.NumberStyles.HexNumber);
-                                    if (aux == errorCheck(buffer, 8, eCheck))
+                                    if (aux == ErrorCheck(buffer, 8, eCheck))
                                     {
                                         // ErrorCode extraction
                                         pktData.CodeLength = int.Parse(Encoding.Default.GetString(buffer, 6, 8), System.Globalization.NumberStyles.HexNumber);
                                         pktData.ErrorCheckType = eCheck;
                                         pktData.Type = PacketTypes.SIP; //SIP recognized
+                                        pktData.ErrorCheckData = aux;
                                         return pktData;
                                     }
                                 }
@@ -420,7 +429,7 @@ namespace AmaspCSharp
         }
 
         //Classical checksum
-        protected ushort checksum16Check(byte[] data, int dataLength)
+        protected ushort Checksum16Check(byte[] data, int dataLength)
         {
             ushort sum = 0;
             for (int i = 0; i < dataLength; i++)
@@ -444,7 +453,7 @@ namespace AmaspCSharp
             return (ushort)((sum2 << 8) | sum1);
         }
 
-        protected int errorCheck(byte[] data, int dataLength, ErrorCheckTypes eCheckType)
+        protected int ErrorCheck(byte[] data, int dataLength, ErrorCheckTypes eCheckType)
         {
             int ret;
             switch (eCheckType)
@@ -454,7 +463,7 @@ namespace AmaspCSharp
                     break;
 
                 case ErrorCheckTypes.checksum16:
-                    ret = checksum16Check(data, dataLength);
+                    ret = Checksum16Check(data, dataLength);
                     break;
 
                 case ErrorCheckTypes.LRC16:
