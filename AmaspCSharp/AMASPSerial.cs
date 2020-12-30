@@ -139,20 +139,20 @@ namespace AmaspCSharp
             pkt[0] = (byte)'!';
             pkt[1] = (byte)'~';
             //ECA
-            hex = Encoding.Default.GetBytes(String.Format("{0:X1}", errorCheckType));
+            hex = Encoding.Default.GetBytes(((int)errorCheckType).ToString("X1"));
             pkt[2] = hex[0];
             //Devide ID
-            hex = Encoding.Default.GetBytes(String.Format("{0:X3}", deviceId));
+            hex = Encoding.Default.GetBytes(deviceId.ToString("X3"));
             pkt[3] = hex[0];
             pkt[4] = hex[1];
             pkt[5] = hex[2];
             //Error Code
-            hex = Encoding.Default.GetBytes(String.Format("{0:X2}", errorCode));
+            hex = Encoding.Default.GetBytes(errorCode.ToString("X2"));
             pkt[6] = hex[0];
             pkt[7] = hex[1];
             //Error Checking data
             ecd = ErrorCheck(pkt, 8, ErrorCheckType);
-            hex = Encoding.Default.GetBytes(String.Format("{0:X4}", ecd));
+            hex = Encoding.Default.GetBytes(ecd.ToString("X4"));
             pkt[8] = hex[0];
             pkt[9] = hex[1];
             pkt[10] = hex[2];

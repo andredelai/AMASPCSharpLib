@@ -26,7 +26,7 @@ namespace AmaspCSharp
     /// <summary>
     /// AMASP Slave class
     /// </summary>
-    class AMASPSerialSlave : AMASPSerial
+    public class AMASPSerialSlave : AMASPSerial
     {
         /// <summary>
         /// Send a SRP (Slave Response Packet) to a master computer.
@@ -101,24 +101,24 @@ namespace AmaspCSharp
             pkt[0] = (byte)'!';
             pkt[1] = (byte)'!';
             //ECA
-            hex = Encoding.Default.GetBytes(String.Format("{0:X1}", ErrorCheckType));
-            pkt[2] = (byte)hex[0];
+            hex = Encoding.Default.GetBytes(((int)ErrorCheckType).ToString("X1"));
+            pkt[2] = hex[0];
             //Device ID
-            hex = Encoding.Default.GetBytes(String.Format("{0:X3}", deviceId));
-            pkt[3] = (byte)hex[0];
-            pkt[4] = (byte)hex[1];
-            pkt[5] = (byte)hex[2];
-            //Error Code       
-            hex = Encoding.Default.GetBytes(String.Format("{0:X2}", InterrupCode));
-            pkt[6] = (byte)hex[0];
-            pkt[7] = (byte)hex[1];
+            hex = Encoding.Default.GetBytes(deviceId.ToString("X3"));
+            pkt[3] = hex[0];
+            pkt[4] = hex[1];
+            pkt[5] = hex[2];
+            //Interruption Code       
+            hex = Encoding.Default.GetBytes(InterrupCode.ToString("X2"));
+            pkt[6] = hex[0];
+            pkt[7] = hex[1];
             //CRC
             ecd = ErrorCheck(pkt, 8, ErrorCheckType);
-            hex = Encoding.Default.GetBytes(String.Format("{0:X4}", ecd));
-            pkt[8] = (byte)hex[0];
-            pkt[9] = (byte)hex[1];
-            pkt[10] = (byte)hex[2];
-            pkt[11] = (byte)hex[3];
+            hex = Encoding.Default.GetBytes(ecd.ToString("X4"));
+            pkt[8] = hex[0];
+            pkt[9] = hex[1];
+            pkt[10] = hex[2];
+            pkt[11] = hex[3];
             //Packet End
             pkt[12] = (byte)'\r';
             pkt[13] = (byte)'\n';

@@ -25,7 +25,7 @@ namespace AmaspCSharp
     /// <summary>
     /// AMASP Master class
     /// </summary>
-    class AMASPSerialMaster : AMASPSerial
+    public class AMASPSerialMaster : AMASPSerial
     {
 
         /// <summary>
@@ -51,18 +51,20 @@ namespace AmaspCSharp
             pkt[0] = (byte) '!';
             pkt[1] = (byte)'?';
             //ECA
-            hex = Encoding.Default.GetBytes(String.Format("{0:X1}", ErrorCheckType));
+            
+            hex = Encoding.Default.GetBytes(((int)ErrorCheckType).ToString("X1"));
+            //hex = Encoding.Default.GetBytes(String.Format("{0:X1}", ErrorCheckType));
             pkt[2] = hex[0];
             //device Id
-            hex = Encoding.Default.GetBytes(String.Format("{0:X3}", deviceId));
+            hex = Encoding.Default.GetBytes(deviceId.ToString("X3"));
             pkt[3] = hex[0];
             pkt[4] = hex[1];
             pkt[5] = hex[2];
             //Message length
-            hex = Encoding.Default.GetBytes(String.Format("{0:X3}", msgLength));
-            pkt[6] = (byte)hex[0];
-            pkt[7] = (byte)hex[1];
-            pkt[8] = (byte)hex[2];
+            hex = Encoding.Default.GetBytes(msgLength.ToString("X3"));
+            pkt[6] = hex[0];
+            pkt[7] = hex[1];
+            pkt[8] = hex[2];
             //Message (payload)
             for (int i = 0; i < msgLength; i++)
             {
@@ -70,7 +72,7 @@ namespace AmaspCSharp
             }
             //Error checking
             ecd = ErrorCheck(pkt, msgLength + 9, ErrorCheckType);
-            hex = Encoding.Default.GetBytes(String.Format("{0:X4}", ecd));
+            hex = Encoding.Default.GetBytes(ecd.ToString("X4"));
             pkt[9 + msgLength] = hex[0];
             pkt[9 + msgLength + 1] = hex[1];
             pkt[9 + msgLength + 2] = hex[2];
