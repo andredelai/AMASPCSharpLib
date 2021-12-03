@@ -141,7 +141,7 @@ namespace AmaspCSharp
             //ECA
             hex = Encoding.Default.GetBytes(((int)errorCheckType).ToString("X1"));
             pkt[2] = hex[0];
-            //Devide ID
+            //Device ID
             hex = Encoding.Default.GetBytes(deviceId.ToString("X3"));
             pkt[3] = hex[0];
             pkt[4] = hex[1];
@@ -207,7 +207,7 @@ namespace AmaspCSharp
                         //Pre-check of ECA value
                         if (buffer[2] < '0' || buffer[2] > '5')
                         {
-                            //ECA no identified (ignore the packet) 
+                            //ECA not identified (ignore the packet) 
                             pktData.Type = PacketTypes.Timeout;
                             return pktData;
                         }

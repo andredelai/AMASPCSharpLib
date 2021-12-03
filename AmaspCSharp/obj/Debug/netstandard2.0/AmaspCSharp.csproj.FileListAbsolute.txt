@@ -16,3 +16,12 @@ C:\Users\delai\Documents\Repositorio\amaspcsharplib\AmaspCSharp\obj\Debug\netsta
 C:\Users\delai\Documents\Repositorio\amaspcsharplib\AmaspCSharp\obj\Debug\netstandard2.0\AmaspCSharp.csproj.CoreCompileInputs.cache
 C:\Users\delai\Documents\Repositorio\amaspcsharplib\AmaspCSharp\obj\Debug\netstandard2.0\AmaspCSharp.dll
 C:\Users\delai\Documents\Repositorio\amaspcsharplib\AmaspCSharp\obj\Debug\netstandard2.0\AmaspCSharp.pdb
+C:\GitRepos\AMASPCSharpLib\AmaspCSharp\bin\Debug\netstandard2.0\AmaspCSharp.deps.json
+C:\GitRepos\AMASPCSharpLib\AmaspCSharp\bin\Debug\netstandard2.0\AmaspCSharp.dll
+C:\GitRepos\AMASPCSharpLib\AmaspCSharp\bin\Debug\netstandard2.0\AmaspCSharp.pdb
+C:\GitRepos\AMASPCSharpLib\AmaspCSharp\obj\Debug\netstandard2.0\AmaspCSharp.GeneratedMSBuildEditorConfig.editorconfig
+C:\GitRepos\AMASPCSharpLib\AmaspCSharp\obj\Debug\netstandard2.0\AmaspCSharp.AssemblyInfoInputs.cache
+C:\GitRepos\AMASPCSharpLib\AmaspCSharp\obj\Debug\netstandard2.0\AmaspCSharp.AssemblyInfo.cs
+C:\GitRepos\AMASPCSharpLib\AmaspCSharp\obj\Debug\netstandard2.0\AmaspCSharp.csproj.CoreCompileInputs.cache
+C:\GitRepos\AMASPCSharpLib\AmaspCSharp\obj\Debug\netstandard2.0\AmaspCSharp.dll
+C:\GitRepos\AMASPCSharpLib\AmaspCSharp\obj\Debug\netstandard2.0\AmaspCSharp.pdb
